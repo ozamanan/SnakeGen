@@ -1,4 +1,4 @@
 <Surface(10x10x32 SW)>
-position of food :(200, 320)
+position of food :(240, 20)
 X :[290]
 Y :[290]
