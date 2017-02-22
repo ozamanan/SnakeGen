@@ -15,25 +15,25 @@ def die(screen, score):
     pygame.display.quit()
 
 orig_stdout = sys.stdout
-f = file('out.txt', 'w+')
-sys.stdout = f
 xs = [290]
 ys = [290]
 dirs = 0
+if dirs == 0:
+	pygame.time.wait(3000)
+	dirs = 1
 score = 0
-applepos = ((random.randint(0,550)/10)*10, (random.randint(0, 550)/10)*10)
+foodpos = ((random.randint(0,550)/10)*10, (random.randint(0, 550)/10)*10)
 pygame.init()
 s=pygame.display.set_mode((600, 600))
 pygame.display.set_caption('Snake Build - v1. 3. 4')
 appleimage = pygame.Surface((10, 10))
-appleimage.fill((255, 255, 255))
+appleimage.fill((255, 255, 0))
 img = pygame.Surface((10, 10))
-img.fill((255, 255, 255))
+img.fill((255, 0, 0))
 f = pygame.font.SysFont('Arial', 20)
 clock = pygame.time.Clock()
 while True:
-    print appleimage
-    print "position of food :" + str(applepos)
+    print "position of food :" + str(foodpos)
     print "X :" + str(xs)
     print "Y :" + str(ys)
     clock.tick(10)
@@ -56,13 +56,21 @@ while True:
         if collide(xs[0], xs[i], ys[0], ys[i], 10, 10, 10, 10):
             die(s, score)
         i-=1
-    if collide(xs[0], applepos[0], ys[0], applepos[1], 10, 10, 10, 10):
+    if collide(xs[0], foodpos[0], ys[0], foodpos[1], 10, 10, 10, 10):
         score+=1
         xs.append(600)
         ys.append(600)
-        applepos = ((random.randint(0,550)/10)*10, (random.randint(0, 550)/10)*10)
-    if xs[0] < 0 or xs[0] > 550 or ys[0] < 0 or ys[0] > 550:
-        die(s, score)
+        foodpos = ((random.randint(0,550)/10)*10, (random.randint(0, 550)/10)*10)
+    if xs[0] < 0 or xs[0] > 600 or ys[0] < 0 or ys[0] > 600:
+    	if xs[0]<0:
+    		xs[0]=600
+    	elif xs[0]>600:
+    		xs[0]=0
+    	elif ys[0]<0:
+    		ys[0]=600
+    	elif ys[0]>600:
+    		ys[0]=0
+        #die(s, score)
     i = len(xs)-1
     
     while i >= 1:
@@ -80,7 +88,7 @@ while True:
     s.fill((0,0,0))
     for i in range(0, len(xs)):
         s.blit(img, (xs[i], ys[i]))
-    s.blit(appleimage, applepos)
+    s.blit(appleimage, foodpos)
     t=f.render(str(score), True, (255, 255, 255))
     s.blit(t, (10, 10))
     sys.stdout = orig_stdout
