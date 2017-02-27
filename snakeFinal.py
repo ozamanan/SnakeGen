@@ -22,7 +22,7 @@ if dirs == 0:
 	pygame.time.wait(3000)
 	dirs = 1
 score = 0
-foodpos = ((random.randint(0,550)/10)*10, (random.randint(0, 550)/10)*10)
+foodpos = ((random.randint(0,600)/10)*10, (random.randint(0, 600)/10)*10)
 pygame.init()
 s=pygame.display.set_mode((600, 600))
 pygame.display.set_caption('Snake Build - v1. 3. 4')
@@ -33,9 +33,12 @@ img.fill((255, 0, 0))
 f = pygame.font.SysFont('Arial', 20)
 clock = pygame.time.Clock()
 while True:
-    print "position of food :" + str(foodpos)
     print "X :" + str(xs)
     print "Y :" + str(ys)
+    xd = xs[0] - foodpos[0]
+    yd = ys[0] - foodpos[1]
+    dist = (xd**2 + yd**2)**(0.5)
+    print "dist from food: " + str(dist)
     clock.tick(10)
     for e in pygame.event.get():
         if e.type == QUIT:
@@ -60,7 +63,7 @@ while True:
         score+=1
         xs.append(600)
         ys.append(600)
-        foodpos = ((random.randint(0,550)/10)*10, (random.randint(0, 550)/10)*10)
+        foodpos = ((random.randint(0,600)/10)*10, (random.randint(0, 600)/10)*10)
     if xs[0] < 0 or xs[0] > 600 or ys[0] < 0 or ys[0] > 600:
     	if xs[0]<0:
     		xs[0]=600

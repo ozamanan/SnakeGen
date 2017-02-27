@@ -2,9 +2,10 @@ import numpy as np
 
 def nonlin(x,deriv=False):
 	if(deriv==True):
-	    return x*(1-x)
+		sig = 1/(1+np.exp(-100*x))
+		return (sig*(1-sig))
 
-	return 1/(1+np.exp(-x))
+	return 1/(1+np.exp(-100*x))
     
 X = np.array([[0,0,1],
               [0,1,1],
@@ -16,11 +17,11 @@ y = np.array([[1],
 	      [0],
               [1]])
 
-np.random.seed(1)
+#np.random.seed(1)
 
 # randomly initialize our weights with mean 0
-syn0 = 2*np.random.random((3,4)) - 1
-syn1 = 2*np.random.random((4,1)) - 1
+syn0 = 5*np.random.random((3,1500)) - 1
+syn1 = 5*np.random.random((1500,1)) - 1
 
 for j in xrange(60000):
 
